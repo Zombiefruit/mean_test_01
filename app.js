@@ -10,6 +10,11 @@ function($stateProvider, $urlRouterProvider) {
       url: '/home',
       templateUrl: '/home.html',
       controller: 'MainCtrl'
+    })
+    .state('posts', {
+      url: '/posts/{id}', // {id} is a route parameter that will be provided to the URL (e.g. post/post15)
+      templateUrl: '/posts.html',
+      controller: 'PostsCtrl'
     });
 
   $urlRouterProvider.otherwise('/home');
@@ -22,11 +27,36 @@ app.factory('posts', [function() {
   return o;
 }]);
 
+app.controller('PostsCtrl', [
+  '$scope',
+  '$stateParams',
+  'posts',
+  function($scope, $stateParams, posts) {
+    $scope.post = posts.posts[$stateParams.id];
+
+    $scope.addComment = function() {
+      if ($scope.body === "") {
+        return;
+      }
+
+      $scope.post.comments.push({
+        body: $scope.body,
+        author: 'user',
+        upvotes: 0
+      });
+      $scope.body = "";
+    };
+
+    $scope.incrementUpvotes = function(comment) {
+      comment.upvotes += 1;
+    };
+  }
+]);
+
 app.controller('MainCtrl', [
   '$scope',
   'posts',
   function($scope, posts) {
-    $scope.test = "Hello World";
     $scope.posts = posts.posts;
 
     $scope.addPost = function() {
@@ -36,7 +66,11 @@ app.controller('MainCtrl', [
       $scope.posts.push({
         title: $scope.title,
         link: $scope.link,
-        upvotes: 0
+        upvotes: 0,
+        comments: [
+          {author: 'Joe', body: 'Cool post!', upvotes: 0},
+          {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}
+        ]
       });
 
       $scope.title = "";
