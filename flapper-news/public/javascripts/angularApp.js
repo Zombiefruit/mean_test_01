@@ -17,7 +17,7 @@ function($stateProvider, $urlRouterProvider) {
       }
     })
     .state('/posts', {
-      url: '/posts/:id', // {id} is a route parameter that will be provided to the URL (e.g. post/post15)
+      url: '/posts/{id}', // {id} is a route parameter that will be provided to the URL (e.g. post/post15)
       templateUrl: '/views/posts.html',
       controller: 'PostsCtrl',
       resolve: {
