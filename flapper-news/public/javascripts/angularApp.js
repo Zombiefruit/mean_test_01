@@ -8,16 +8,16 @@ function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: '/home.html',
+      templateUrl: 'home.html',
       controller: 'MainCtrl'
     })
-    .state('posts', {
-      url: '/posts/{id}', // {id} is a route parameter that will be provided to the URL (e.g. post/post15)
-      templateUrl: '/posts.html',
+    .state('/posts', {
+      url: 'posts/{id}', // {id} is a route parameter that will be provided to the URL (e.g. post/post15)
+      templateUrl: 'posts.html',
       controller: 'PostsCtrl'
     });
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/views/home');
 }]);
 
 app.factory('posts', [function() {
