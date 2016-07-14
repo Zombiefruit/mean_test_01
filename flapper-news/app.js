@@ -1,4 +1,5 @@
 var express = require('express');
+var passport = require('passport');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -8,14 +9,19 @@ var mongoose = require('mongoose');
 
 var app = express();
 
+
 // Connect mongoose to flapper-news
 mongoose.connect('mongodb://localhost/news');
 
 require('./models/Posts');
 require('./models/Comments');
+require('./models/Users');
+require('./config/passport');
 
 var users = require('./routes/users');
 var routes = require('./routes/index');
+
+app.use(passport.initialize());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
