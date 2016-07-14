@@ -190,8 +190,10 @@ app.controller('PostsCtrl', [
   '$stateParams',
   'posts',
   'post',
-  function($scope, $stateParams, posts, post) {
+  'auth',
+  function($scope, $stateParams, posts, post, auth) {
     $scope.post = post;
+    $scope.isLoggedIn = auth.isLoggedIn;
 
     $scope.addComment = function() {
       if ($scope.body === "") {
@@ -216,8 +218,10 @@ app.controller('PostsCtrl', [
 app.controller('MainCtrl', [
   '$scope',
   'posts',
-  function($scope, posts) {
+  'auth',
+  function($scope, posts, auth) {
     $scope.posts = posts.posts;
+    $scope.isLoggedIn = auth.isLoggedIn;
 
     $scope.addPost = function() {
       if (!$scope.title || $scope.title === "") {
